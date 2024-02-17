@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Folder {
     
+    public Folder parentFolder;
     public String folderName;
     public ArrayList<Folder> subFolders;
     public ArrayList<File> files;
@@ -12,10 +13,12 @@ public class Folder {
         this.folderName = folderName;
         subFolders = new ArrayList<>();
         files = new ArrayList<>();
+        parentFolder = null;
     }
 
     public void addFolder(Folder folder)
     {
+        folder.setParentFolder(this);
         subFolders.add(folder);
     }
 
@@ -25,31 +28,38 @@ public class Folder {
         files.add(file);
     }
 
-    public void delete(Object object)
+    public void setParentFolder(Folder folder)
     {
-        if (object instanceof Folder)
-        {
-            for (int i = 0; i < subFolders.size(); i++)
-            {
-                if (subFolders.get(i).equals(object))
-                {
-                    subFolders.remove(i);
-                    break;
-                }
-            }
-        }
+        parentFolder = folder;
+    }
 
-        if (object instanceof File)
+    public ArrayList<Folder> getSubFolders()
+    {
+        return subFolders;
+    }
+
+    public ArrayList<File> getFiles()
+    {
+        return files;
+    }
+
+    public Folder getParentFolder()
+    {
+        return parentFolder;
+    }
+
+    public void delete()
+    {
+
+        for (int i = 0; i < parentFolder.getSubFolders().size(); i++)
         {
-            for (int i = 0; i < files.size(); i++)
+            if (parentFolder.getSubFolders().get(i).equals(this))
             {
-                if (files.get(i).equals(object))
-                {
-                    files.remove(i);
-                    break;
-                }
+                parentFolder.getSubFolders().remove(i);
+                break;
             }
         }
+    
     }
 
     public void setFolderName(String folderName)
@@ -86,6 +96,20 @@ public class Folder {
     
         public void setFileName(String fileName) {
             this.fileName = fileName;
+        }
+
+        public void delete()
+        {
+    
+            for (int i = 0; i < parentFolder.getFiles().size(); i++)
+            {
+                if (parentFolder.getFiles().get(i).equals(this))
+                {
+                    parentFolder.getFiles().remove(i);
+                    break;
+                }
+            }
+        
         }
     }
     

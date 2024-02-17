@@ -42,12 +42,12 @@ public class driver {
 
         System.out.println("\n\n ---- AFTER DELETING APP --------- \n\n");
 
-        sourceFiles.delete(app);
+        app.delete();
         demo1.printStructure("");
 
         System.out.println("\n\n ---- AFTER DELETING PUBLIC --------- \n\n");
 
-        sourceFiles.delete(publicF);
+        publicF.delete();
         demo1.printStructure("");
     }
 }
